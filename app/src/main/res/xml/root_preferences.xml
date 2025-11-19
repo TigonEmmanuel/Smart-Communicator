@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?><PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="Display">
+
+        <ListPreference
+            app:key="theme_preference"
+            app:title="Theme"
+            app:summary="Choose the app's color theme"
+            app:entries="@array/theme_entries"
+            app:entryValues="@array/theme_values"
+            app:defaultValue="system"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="About">
+
+        <Preference
+            app:key="feedback_preference"
+            app:title="Send Feedback"
+            app:summary="Report issues or suggest features" />
+
+        <Preference
+            app:key="share_preference"
+            app:title="Share App"
+            app:summary="Share this app with friends and family" />
+
+        <!-- THIS IS THE NEW PREFERENCE -->
+        <Preference
+            app:key="rate_app_preference"
+            app:title="Rate App"
+            app:summary="Leave a review on the Google Play Store" />
+
+        <Preference
+            app:key="version_preference"
+            app:title="App Version"
+            app:summary="1.0.0" /> <!-- We can set this programmatically later -->
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Smart Communicator</string>
+
+    <!-- Titles for bottom navigation --><string name="title_list">List</string>
+    <string name="title_contact">Contact</string>
+    <string name="title_map">Map</string>
+    <string name="title_settings">Settings</string>
+
+</resources>

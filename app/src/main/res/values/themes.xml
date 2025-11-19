@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.SmartCommunicator" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        <!--
+            THIS IS THE FIX:
+            This line forces the SearchView to use a standard AppCompat style,
+            which correctly handles text and icon colors in both light and dark modes.
+        -->
+        <item name="searchViewStyle">@style/Widget.AppCompat.SearchView</item>
+    </style>
+
+    <style name="Theme.SmartCommunicator" parent="Base.Theme.SmartCommunicator" />
+</resources>

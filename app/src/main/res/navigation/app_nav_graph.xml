@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_nav_graph"
+    app:startDestination="@+id/navigation_contact"> <!-- PROBLEM 1 FIXED: Set start destination to the first button -->
+
+    <!-- Screen 1: Add Contact (+) Screen -->
+    <fragment
+        android:id="@+id/navigation_contact"
+        android:name="com.example.smartcommunicator.ui.contact.ContactFragment"
+        android:label="Contact"
+        tools:layout="@layout/fragment_contact" />
+
+    <!-- Screen 2: Contact List Screen -->
+    <!-- PROBLEM 2 FIXED: The ID is now 'navigation_list' to match all other files -->
+    <fragment
+        android:id="@+id/navigation_list"
+        android:name="com.example.smartcommunicator.ui.list.ContactListFragment"
+        android:label="List"
+        tools:layout="@layout/fragment_contact_list" />
+
+    <!-- Screen 3: Map Screen -->
+    <fragment
+        android:id="@+id/navigation_map"
+        android:name="com.example.smartcommunicator.ui.map.MapFragment"
+        android:label="Map"
+        tools:layout="@layout/fragment_map" />
+
+    <!-- Screen 4: Settings Screen -->
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.example.smartcommunicator.ui.settings.SettingsFragment"
+        android:label="Settings"
+        tools:layout="@layout/fragment_settings" />
+
+</navigation>

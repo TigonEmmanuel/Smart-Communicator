@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--
+        THIS IS THE FIX:
+        Instead of a custom "@drawable/ic_delete", we use a
+        guaranteed built-in Android system icon "@android:drawable/ic_menu_delete".
+    -->
+    <item
+        android:id="@+id/action_delete_items"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="Delete"
+        app:showAsAction="ifRoom|withText" />
+
+</menu>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Item 1: Contact (your original first button) -->
+    <item
+        android:id="@+id/navigation_contact"
+        android:icon="@drawable/ic_contact_add"
+        android:title="@string/title_contact" />
+
+    <!-- Item 2: List -->
+    <item
+        android:id="@+id/navigation_list"
+        android:icon="@drawable/ic_contact_list"
+        android:title="@string/title_list" />
+
+    <!-- Item 3: Map -->
+    <item
+        android:id="@+id/navigation_map"
+        android:icon="@drawable/ic_map"
+        android:title="@string/title_map" />
+
+    <!-- Item 4: Settings (RESTORED) -->
+    <item
+        android:id="@+id/navigation_settings"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/title_settings" />
+
+</menu>

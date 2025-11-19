@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file defines the shape of the circle for the contact's initial -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+
+    <!--
+    The actual color will be set in the Java code (Adapter).
+    This color is just a placeholder.
+    -->
+    <solid android:color="@color/purple_500" />
+
+</shape>
