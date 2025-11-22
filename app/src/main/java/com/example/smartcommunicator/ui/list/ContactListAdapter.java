@@ -1,7 +1,8 @@
 package com.example.smartcommunicator.ui.list;
 
+// REMOVED: Unnecessary imports are gone (Manifest, Context, PackageManager)
 import android.content.Intent;
-import android.graphics.Color; // Import Color
+import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -12,13 +13,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat; // Import ContextCompat
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.smartcommunicator.R;
 import com.example.smartcommunicator.model.Contact;
 
-import java.util.ArrayList; // Import ArrayList
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -28,21 +29,21 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     private final int[] avatarColors;
     private final Random random = new Random();
 
-    // --- NEW: VARIABLES FOR SELECTION ---
     private boolean isMultiSelectMode = false;
     private final List<Contact> selectedItems = new ArrayList<>();
     private final MultiSelectListener multiSelectListener;
 
-    // --- NEW: INTERFACE TO COMMUNICATE WITH FRAGMENT ---
+    // --- UPDATED INTERFACE: Added a new method for call requests ---
     public interface MultiSelectListener {
         void onMultiSelectStateChanged(boolean isEnabled);
         void onItemSelectionChanged(int selectedCount);
+        void onCallRequested(Contact contact); // NEW METHOD
     }
 
     public ContactListAdapter(List<Contact> contactList, int[] avatarColors, MultiSelectListener listener) {
         this.contactList = contactList;
         this.avatarColors = avatarColors;
-        this.multiSelectListener = listener; // Store the listener
+        this.multiSelectListener = listener;
     }
 
     @NonNull
@@ -63,8 +64,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         return contactList != null ? contactList.size() : 0;
     }
 
-    // --- NEW: METHODS TO MANAGE SELECTION MODE ---
-
+    // (Methods like startMultiSelectMode, stopMultiSelectMode, etc. are unchanged)
     public void startMultiSelectMode() {
         if (!isMultiSelectMode) {
             isMultiSelectMode = true;
@@ -76,7 +76,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         isMultiSelectMode = false;
         selectedItems.clear();
         multiSelectListener.onMultiSelectStateChanged(false);
-        notifyDataSetChanged(); // Refresh all items to remove highlights
+        notifyDataSetChanged();
     }
 
     public boolean isMultiSelectMode() {
@@ -87,16 +87,17 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         return selectedItems;
     }
 
+
     public class ContactViewHolder extends RecyclerView.ViewHolder {
         TextView contactInitial;
         TextView contactName;
         ImageButton callButton;
         ImageButton messageButton;
-        View itemView; // Reference to the whole item view for background changes
+        View itemView;
 
         public ContactViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.itemView = itemView; // Store the view
+            this.itemView = itemView;
             contactInitial = itemView.findViewById(R.id.contact_initial);
             contactName = itemView.findViewById(R.id.contact_name);
             callButton = itemView.findViewById(R.id.button_call);
@@ -116,12 +117,10 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             GradientDrawable background = (GradientDrawable) contactInitial.getBackground();
             background.setColor(randomColor);
 
-            // --- UPDATED: HANDLE CLICKS DIFFERENTLY IN SELECT MODE ---
             itemView.setOnClickListener(v -> {
                 if (isMultiSelectMode) {
                     toggleSelection(contact);
                 } else {
-                    // Normal click action (optional, can navigate to contact details later)
                     Toast.makeText(v.getContext(), "Clicked on " + contact.getName(), Toast.LENGTH_SHORT).show();
                 }
             });
@@ -131,28 +130,23 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                     startMultiSelectMode();
                     toggleSelection(contact);
                 }
-                return true; // Consume the long click
+                return true;
             });
 
-            // Set the background highlight if the item is selected
             if (selectedItems.contains(contact)) {
                 itemView.setBackgroundColor(ContextCompat.getColor(itemView.getContext(), R.color.selected_item_background));
             } else {
-                itemView.setBackgroundColor(Color.TRANSPARENT); // Default transparent background
+                itemView.setBackgroundColor(Color.TRANSPARENT);
             }
 
-            // --- Button Listeners (No change here) ---
+            // --- SIMPLIFIED CALL BUTTON LOGIC ---
             callButton.setOnClickListener(v -> {
-                String phoneNumber = contact.getNumber();
-                if (phoneNumber != null && !phoneNumber.trim().isEmpty()) {
-                    Intent dialIntent = new Intent(Intent.ACTION_DIAL);
-                    dialIntent.setData(Uri.parse("tel:" + phoneNumber));
-                    v.getContext().startActivity(dialIntent);
-                } else {
-                    Toast.makeText(v.getContext(), "No phone number available", Toast.LENGTH_SHORT).show();
-                }
+                // The adapter's only job is to tell the fragment that the button was clicked.
+                // It passes the specific contact to the listener.
+                multiSelectListener.onCallRequested(contact);
             });
 
+            // --- Message Button Logic (Unchanged) ---
             messageButton.setOnClickListener(v -> {
                 String phoneNumber = contact.getNumber();
                 if (phoneNumber != null && !phoneNumber.trim().isEmpty()) {
@@ -170,9 +164,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             } else {
                 selectedItems.add(contact);
             }
-            // Update the title of the action mode
             multiSelectListener.onItemSelectionChanged(selectedItems.size());
-            // Redraw the item to show/hide highlight
             notifyItemChanged(getAdapterPosition());
         }
     }

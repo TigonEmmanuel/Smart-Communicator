@@ -1,33 +1,49 @@
 package com.example.smartcommunicator.model;
 
-public class Contact {
-    private String name;
-    private String number; // Field for the phone number
+import java.util.Objects; // We need to import this for the new methods
 
-    // Constructor to create a new Contact object
-    public Contact(String name, String number) {
+public class Contact {
+    // --- UPDATED: These fields are now final and we have a lookupKey ---
+    private final String lookupKey; // This is the permanent ID from the phone's database
+    private final String name;
+    private final String number;
+
+    // --- UPDATED: The constructor now accepts the lookupKey ---
+    public Contact(String lookupKey, String name, String number) {
+        this.lookupKey = lookupKey;
         this.name = name;
         this.number = number;
     }
 
-    // Getter method for the contact's name
+    // --- NEW: Getter for the unique lookupKey ---
+    public String getLookupKey() {
+        return lookupKey;
+    }
+
+    // --- The old getters are still here, but they are now for final fields ---
     public String getName() {
         return name;
     }
 
-    // Setter method for the contact's name
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    // --- THIS IS THE METHOD THAT FIXES THE ERROR ---
-    // Getter method for the contact's number
     public String getNumber() {
         return number;
     }
 
-    // Setter method for the contact's number
-    public void setNumber(String number) {
-        this.number = number;
+    // --- DELETED: We have removed the setter methods (setName, setNumber) ---
+    // A contact's data should be read-only within the app.
+
+    // --- NEW: We need equals() and hashCode() for List.removeAll() to work correctly ---
+    // This ensures Java can identify contacts by their unique lookupKey.
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Contact contact = (Contact) o;
+        return Objects.equals(lookupKey, contact.lookupKey);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(lookupKey);
     }
 }

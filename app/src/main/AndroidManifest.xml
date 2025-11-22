@@ -5,10 +5,15 @@
     <!--
     FEATURE PERMISSIONS:
     These tell the Google Play Store what hardware your app uses.
-    This helps filter your app for devices that don't have a camera.
     -->
     <uses-feature
         android:name="android.hardware.camera"
+        android:required="false" />
+
+    <!-- THIS IS THE NEW FEATURE TAG TO FIX THE WARNING -->
+    <!-- It tells Google Play that telephony is optional, not required. -->
+    <uses-feature
+        android:name="android.hardware.telephony"
         android:required="false" />
 
     <!--
@@ -19,16 +24,16 @@
     <!-- For saving new contacts to the phone's database -->
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
 
-    <!-- NEW: For reading contacts from the phone to display in the list -->
+    <!-- For reading contacts from the phone to display in the list -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <!-- For placing calls directly -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <!-- For using the camera to scan text -->
     <uses-permission android:name="android.permission.CAMERA" />
 
-    <!--
-    For the Map feature to find the user's current location.
-    We need both for better accuracy.
-    -->
+    <!-- For the Map feature -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
